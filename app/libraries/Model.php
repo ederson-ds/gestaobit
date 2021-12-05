@@ -3,7 +3,6 @@
 namespace App\libraries;
 
 use \R;
-use Dotenv\Dotenv;
 
 require "rb-postgres.php";
 
