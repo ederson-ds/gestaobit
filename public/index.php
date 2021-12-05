@@ -8,33 +8,35 @@
   include('../app/config.php');
   session_start();
   $url = explode('/', $_SERVER['REQUEST_URI']);
-  print_r($url);
-
+  if($url[1] == "gestaobit") {
+    unset($url[1]);
+    $url = array_values($url);
+  }
   $controller = false;
-  if(!$url[2]) {
+  if(!$url[1]) {
     $controller = true;
   } else {
     if(isset($_SESSION['telas'])) {
       foreach (json_decode($_SESSION['telas']) as $tela) {
-        if($url[2] == strtolower($tela->controller) || $url[2] == 'logout') {
+        if($url[1] == strtolower($tela->controller) || $url[1] == 'logout') {
           $controller = true;
         }
       }
     }
   }
-  if(!isset($_SESSION['login']) && $url[2] != 'login') {
-    //header("Location: ".URL."/login");
+  if(!isset($_SESSION['login']) && $url[1] != 'login') {
+    header("Location: ".URL."/login");
     exit();
   } else {
-    if(isset($_SESSION['login']) && !$controller && $url[2] != 'paginas') {
+    if(isset($_SESSION['login']) && !$controller && $url[1] != 'paginas') {
       header("Location: ".URL."/paginas/erro404");
       exit();
     }
   }
 
-  if(isset($url[3])) {
-    $url[3] = strtok($url[3], '?');
-    if($url[3] == "get") {
+  if(isset($url[2])) {
+    $url[2] = strtok($url[2], '?');
+    if($url[2] == "get") {
       $rotas = new Rota();
       exit;
     }
