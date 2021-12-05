@@ -1,0 +1,40 @@
+.sidebar {
+  background: gray;
+  width: 220px;
+  display: flex;
+}
+.main {
+  display: flex;
+}
+.content {
+  width: 100%;
+}
+.form-control {
+  border-radius: 0px;
+}
+.select {
+  position: absolute;
+  overflow-y: scroll;
+  height: 67px;
+  width: 150px;
+  box-shadow: 0 0 6px #ccc;
+  border: 1px solid #d1d1d1;
+  background: white;
+}
+.select table {
+  width: 100%;
+}
+.select th {
+  font-weight:normal;
+}
+.select tr {
+  cursor: default;
+  background-color: #f9f9f9;
+}
+.select tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.select tr:hover th {
+  background-color: black;
+  color: white
+}
