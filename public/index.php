@@ -8,6 +8,8 @@
   include('../app/config.php');
   session_start();
   $url = explode('/', $_SERVER['REQUEST_URI']);
+  print_r($url);
+  
   $controller = false;
   if(!$url[2]) {
     $controller = true;
