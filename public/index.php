@@ -9,7 +9,7 @@
   session_start();
   $url = explode('/', $_SERVER['REQUEST_URI']);
   print_r($url);
-  
+
   $controller = false;
   if(!$url[2]) {
     $controller = true;
@@ -23,7 +23,7 @@
     }
   }
   if(!isset($_SESSION['login']) && $url[2] != 'login') {
-    header("Location: ".URL."/login");
+    //header("Location: ".URL."/login");
     exit();
   } else {
     if(isset($_SESSION['login']) && !$controller && $url[2] != 'paginas') {
