@@ -15,17 +15,21 @@
 .select {
   position: absolute;
   overflow-y: scroll;
-  height: 67px;
+  height: 130px;
   width: 150px;
   box-shadow: 0 0 6px #ccc;
   border: 1px solid #d1d1d1;
   background: white;
+  display: flex;
 }
 .select table {
   width: 100%;
 }
-.select th {
-  font-weight:normal;
+.select th,
+.select td {
+  font-weight: normal;
+  padding: 0px 6px;
+  height: 32px;
 }
 .select tr {
   cursor: default;
@@ -36,5 +40,37 @@
 }
 .select tr:hover th {
   background-color: black;
-  color: white
+  color: white;
+}
+.cadastrarNovo {
+  background: green;
+  color: white;
+  cursor: pointer;
+}
+.cadastrarNovo:hover {
+  background: darkgreen;
+}
+.required:after {
+  content: " *";
+  color: red;
+}
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: black;
+  box-shadow: none !important;
+  outline: 0 none;
 }

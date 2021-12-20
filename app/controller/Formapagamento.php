@@ -7,17 +7,26 @@ use App\models\FormaPagamentoModel;
 class Formapagamento extends Controller {
   private $formaPagamento;
   public function index() {
-    $this->view('contasapagar/contasapagar');
+    $this->view('formapagamento/formapagamento');
   }
 
-  public function create() {
-    $this->view('contasapagar/contasapagaradd');
+  public function create($id = 0) {
+    $this->formaPagamento = new FormaPagamentoModel();
+    $this->requiredFields = ['descricao'];
+    $dados['camposInvalidos'] = parent::verificaCamposInvalidos();
+    $dados['camposVazios'] = parent::verificaCamposVazios($this->requiredFields);
+    $dados['formaPagamento'] = ($id) ? $this->formaPagamento->getOne($id) : "";
+    
+    if(!$dados['camposInvalidos'] && !$dados['camposVazios']) {
+      $this->formaPagamento->save();
+    }
+
+    $this->view('formapagamento/formapagamentoadd', $dados);
   }
 
   public function get() {
     $query = $_POST['query'] ?? "";
     $this->formaPagamento = new FormaPagamentoModel();
-    $listFormaPagamento = $this->formaPagamento->get($query);
-    echo json_encode($listFormaPagamento);
+    echo json_encode($this->formaPagamento->get($query));
   }
 }
