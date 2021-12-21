@@ -23,13 +23,19 @@ class Model
         }
       }
     }
-    if($achou) {
+    if ($achou) {
       R::store($data[$this->table]);
     }
   }
 
-  public function getOne($id) {
+  public function getOne($id)
+  {
     return R::findOne($this->table, "id = ?", [$id]);
+  }
+
+  public function numRows()
+  {
+    return R::count($this->table);
   }
 
   public function __construct()
