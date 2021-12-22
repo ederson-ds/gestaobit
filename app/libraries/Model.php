@@ -35,6 +35,10 @@ class Model
     return false;
   }
 
+  public function delete($id) {
+    R::trash($this->table, $id);
+  }
+
   public function getOne($id)
   {
     return R::findOne($this->table, "id = ?", [$id]);

@@ -6,7 +6,34 @@ use App\helpers\Htmlhelper;
 
 class Controller
 {
+  protected $controller = null;
+  protected $tela = null;
   public $requiredFields = [];
+
+  public function __construct()
+  {
+    foreach (json_decode($_SESSION['telas']) as $key => $tela) {
+      if (strtolower($tela->controller) == $this->controller) {
+        $this->tela = $tela;
+      }
+    }
+  }
+
+  public function permissaoCadastrarEditar($id)
+  {
+    if (!$this->tela->cadastrar && !$id) {
+      die("Você não tem permissão para cadastrar nesta tela");
+    } else if (!$this->tela->editar && $id) {
+      die("Você não tem permissão para editar nesta tela");
+    }
+  }
+
+  public function permissaoDelete()
+  {
+    if (!$this->tela->excluir) {
+      die("Você não tem permissão para excluir nesta tela");
+    }
+  }
 
   private function endsWith($haystack, $needle)
   {
@@ -44,13 +71,15 @@ class Controller
     return $camposInvalidos;
   }
 
-  public function validacoes() {
+  public function validacoes()
+  {
     $dados['camposInvalidos'] = $this->verificaCamposInvalidos();
     $dados['camposVazios'] = $this->verificaCamposVazios($this->requiredFields);
     return $dados;
   }
 
-  public function postSave($dados, $model, $insertOuUpdate) {
+  public function postSave($dados, $model, $insertOuUpdate)
+  {
     $dados['objeto'] = ($model->id) ? $model->getOne($model->id) : "";
 
     if ($insertOuUpdate && $model->id) {

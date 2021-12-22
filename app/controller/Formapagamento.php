@@ -8,6 +8,7 @@ use App\models\FormaPagamentoModel;
 class Formapagamento extends Controller
 {
   private $formaPagamento;
+  public $controller = "formapagamento";
   public function index()
   {
     $this->view('formapagamento/formapagamento');
@@ -15,6 +16,7 @@ class Formapagamento extends Controller
 
   public function create($id = 0)
   {
+    parent::permissaoCadastrarEditar($id);
     $this->formaPagamento = new FormaPagamentoModel();
     $this->formaPagamento->id = $id;
     $this->requiredFields = ['descricao'];
@@ -25,6 +27,17 @@ class Formapagamento extends Controller
     $dados = parent::postSave($dados, $this->formaPagamento, $insertOuUpdate);
 
     $this->view('formapagamento/formapagamentoadd', $dados);
+  }
+
+  public function delete($id = 0)
+  {
+    parent::permissaoDelete();
+    if ($id) {
+      $this->formaPagamento = new FormaPagamentoModel();
+      $this->formaPagamento->delete($id);
+    }
+    header("Location: " . URL . "/". $this->controller);
+    die();
   }
 
   public function list()

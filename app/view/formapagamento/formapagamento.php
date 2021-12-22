@@ -2,12 +2,14 @@
     <thead>
         <tr>
             <td>Descrição</td>
-            <td>Ações</td>
+            <?php if($this->tela->editar || $this->tela->excluir) { ?>
+                <td>Ações</td>
+            <?php } ?>
         </tr>
     </thead>
 </table>
 <hr>
-<a href="<?php echo URL ?>/formapagamento/create">create</a>
+<?php echo ($this->tela->cadastrar) ? '<a href="'.URL.'/'.$this->controller.'/create">Inserir novo</a>' : "" ?>
 
 <script>
     $(document).ready(function() {
@@ -24,16 +26,25 @@
             "columns": [{
                     "data": "descricao"
                 },
-                {
-                    "data": null,
-                    "orderable": false,
-                    "render": function ( data, type, row ) {
-                        return `
-                            <a href="<?php echo URL ?>/formapagamento/create/`+data.id+`" class="btn btn-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        `
-                    }
-                }
+                <?php if($this->tela->editar || $this->tela->excluir) {
+                    echo '
+                    {
+                        "data": null,
+                        "orderable": false,
+                        "render": function ( data, type, row ) {
+                            var edit = `<a href="'.URL.'/formapagamento/create/`+data.id+`" class="btn btn-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
+                            var excluir = ` <button type="button" class="btn btn-danger btnExcluir" data-id="`+data.id+`" data-controller="formapagamento" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+                            var acoes = "";
+                            if('.($this->tela->editar ?? "false").') {
+                                acoes += edit;
+                            }
+                            if('.($this->tela->excluir ?? "false").') {
+                                acoes += excluir;
+                            }
+                            return acoes;
+                        }
+                    }';
+                } ?>
             ]
         });
     });
