@@ -16,14 +16,13 @@ class Formapagamento extends Controller
   public function create($id = 0)
   {
     $this->formaPagamento = new FormaPagamentoModel();
+    $this->formaPagamento->id = $id;
     $this->requiredFields = ['descricao'];
-    $dados['camposInvalidos'] = parent::verificaCamposInvalidos();
-    $dados['camposVazios'] = parent::verificaCamposVazios($this->requiredFields);
-    $dados['formaPagamento'] = ($id) ? $this->formaPagamento->getOne($id) : "";
+    $dados = parent::validacoes();
 
-    if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
-      $this->formaPagamento->save();
-    }
+    $insertOuUpdate = $this->formaPagamento->save($dados);
+
+    $dados = parent::postSave($dados, $this->formaPagamento, $insertOuUpdate);
 
     $this->view('formapagamento/formapagamentoadd', $dados);
   }

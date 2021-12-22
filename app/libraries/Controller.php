@@ -44,6 +44,23 @@ class Controller
     return $camposInvalidos;
   }
 
+  public function validacoes() {
+    $dados['camposInvalidos'] = $this->verificaCamposInvalidos();
+    $dados['camposVazios'] = $this->verificaCamposVazios($this->requiredFields);
+    return $dados;
+  }
+
+  public function postSave($dados, $model, $insertOuUpdate) {
+    $dados['objeto'] = ($model->id) ? $model->getOne($model->id) : "";
+
+    if ($insertOuUpdate && $model->id) {
+      $dados['sucessoMsg'] = "Atualizado com sucesso!";
+    } else if ($insertOuUpdate && !$model->id) {
+      $dados['sucessoMsg'] = "Inserido com sucesso!";
+    }
+    return $dados;
+  }
+
   protected function view($view, $dados = [])
   {
     $html = new Htmlhelper($dados, $this->requiredFields);

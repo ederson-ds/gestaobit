@@ -10,22 +10,29 @@ class Model
 {
   protected $fields = [];
   protected $table = null;
+  public $id = 0;
 
-  public function save()
+  public function save($dados)
   {
-    $data[$this->table] = R::dispense($this->table);
-    $achou = false;
-    foreach ($_POST as $key => $campo) {
-      foreach ($this->fields as $field) {
-        if ($key == $field) {
-          $data[$this->table]->$key = $campo;
-          $achou = true;
+    if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data[$this->table] = R::load($this->table, $this->id);
+        $achou = false;
+        foreach ($_POST as $key => $campo) {
+          foreach ($this->fields as $field) {
+            if ($key == $field) {
+              $data[$this->table]->$key = $campo;
+              $achou = true;
+            }
+          }
+        }
+        if ($achou) {
+          R::store($data[$this->table]);
+          return true;
         }
       }
     }
-    if ($achou) {
-      R::store($data[$this->table]);
-    }
+    return false;
   }
 
   public function getOne($id)

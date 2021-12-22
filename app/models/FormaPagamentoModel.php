@@ -8,12 +8,6 @@ class FormaPagamentoModel extends Model {
   public $fields = ['descricao'];
   public $table = "formapagamento";
 
-  public function save() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      parent::save();
-    }
-  }
-
   public function list($column, $order, $searchValue = "", $start, $length) {
     $sql = "SELECT * FROM $this->table WHERE descricao ILIKE '%$searchValue%' ORDER BY $column $order LIMIT $length OFFSET $start";
     return R::getAll($sql);
