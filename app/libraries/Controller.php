@@ -6,8 +6,9 @@ use App\helpers\Htmlhelper;
 
 class Controller
 {
+  public $model;
   protected $controller = null;
-  protected $tela = null;
+  public $tela = null;
   public $requiredFields = [];
 
   public function __construct()
@@ -63,7 +64,7 @@ class Controller
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       foreach ($_POST as $key => $campo) {
-        if (preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $_POST[$key])) {
+        if (preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $_POST[$key])) {
           array_push($camposInvalidos, $key);
         }
       }

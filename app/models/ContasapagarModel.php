@@ -3,11 +3,11 @@
 namespace App\models;
 use App\libraries\Model;
 use \R;
-class FormaPagamentoModel extends Model {
+class ContasapagarModel extends Model {
 
-  public $fieldsName = ['Descrição'];
-  public $fields = ['descricao'];
-  public $table = "formapagamento";
+  public $fieldsName = ['Descrição', 'Vencimento', 'Forma de pagamento', 'Conta bancária'];
+  public $fields = ['descricao', 'vencimento'];
+  public $table = "contasapagar";
 
   public function list($column, $order, $searchValue = "", $start, $length) {
     $sql = "SELECT * FROM $this->table WHERE descricao ILIKE '%$searchValue%' ORDER BY $column $order LIMIT $length OFFSET $start";

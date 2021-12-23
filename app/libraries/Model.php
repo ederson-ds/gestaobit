@@ -8,6 +8,7 @@ require "rb-postgres.php";
 
 class Model
 {
+  protected $fieldsName = [];
   protected $fields = [];
   protected $table = null;
   public $id = 0;
@@ -35,12 +36,15 @@ class Model
     return false;
   }
 
-  public function delete($id) {
+  public function delete($id)
+  {
     R::trash($this->table, $id);
   }
 
   public function getOne($id)
   {
+    if (!$id)
+      $id = 0;
     return R::findOne($this->table, "id = ?", [$id]);
   }
 

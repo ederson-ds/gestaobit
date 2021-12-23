@@ -7,24 +7,25 @@ use App\models\FormaPagamentoModel;
 
 class Formapagamento extends Controller
 {
-  private $formaPagamento;
   public $controller = "formapagamento";
+
   public function index()
   {
+    $this->model = new FormaPagamentoModel();
     $this->view('formapagamento/formapagamento');
   }
 
   public function create($id = 0)
   {
     parent::permissaoCadastrarEditar($id);
-    $this->formaPagamento = new FormaPagamentoModel();
-    $this->formaPagamento->id = $id;
+    $this->model = new FormaPagamentoModel();
+    $this->model->id = $id;
     $this->requiredFields = ['descricao'];
     $dados = parent::validacoes();
 
-    $insertOuUpdate = $this->formaPagamento->save($dados);
+    $insertOuUpdate = $this->model->save($dados);
 
-    $dados = parent::postSave($dados, $this->formaPagamento, $insertOuUpdate);
+    $dados = parent::postSave($dados, $this->model, $insertOuUpdate);
 
     $this->view('formapagamento/formapagamentoadd', $dados);
   }
