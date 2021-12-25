@@ -104,31 +104,34 @@ class Htmlhelper
 
     public function textField($fieldName, $slug)
     {
+        $value = !$this->dados['cadastrado'] ? (($this->dados['objeto']->$slug) ?? $_POST[$slug]) : "";
         echo '
             <label for="' . $slug . '"' . ((array_search($slug, $this->requiredFields) !== false) ? 'class="required"' : "") . '>' . $fieldName . '</label>
-            <input type="text" class="form-control' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="' . $slug . '" name="' . $slug . '" value="' . (($this->dados['objeto']->$slug) ?? $_POST[$slug]) . '">
+            <input type="text" class="form-control' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
             ' . $this->errorsField($slug) . '
         ';
     }
 
     public function dateField($fieldName, $slug)
     {
+        $value = !$this->dados['cadastrado'] ? (($this->dados['objeto']->$slug) ?? $_POST[$slug]) : "";
         echo '
             <label for="' . $slug . '"' . ((array_search($slug, $this->requiredFields) !== false) ? 'class="required"' : "") . '>' . $fieldName . '</label>
-            <input type="date" class="form-control' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="' . $slug . '" name="' . $slug . '" value="' . (($this->dados['objeto']->$slug) ?? $_POST[$slug]) . '">
+            <input type="date" class="form-control' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
             ' . $this->errorsField($slug) . '
         ';
     }
 
     public function selectField($fieldName, $slug, $model, $printColumn)
     {
-        $objeto = $model->getOne((($this->dados['objeto']->$slug) ?? $_POST[$slug]));
-      
+        $value = !$this->dados['cadastrado'] ? (($this->dados['objeto']->$slug) ?? $_POST[$slug]) : "";
+        $objeto = $model->getOne($value);
+
         echo '
             <label for="selectInput"' . ((array_search($slug, $this->requiredFields) !== false) ? 'class="required"' : "") . '>' . $fieldName . '</label>
             <div class="input-group">
-                <input type="hidden" class="form-control" id="' . $slug . '" name="' . $slug . '" value="' . (($this->dados['objeto']->$slug) ?? $_POST[$slug]) . '">
-                <input type="text" class="form-control selectInput' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="selectInput" value="' . (($objeto->$printColumn) ?? $_POST[$slug]) . '" ' . (($objeto) ? "disabled" : "") . '>
+                <input type="hidden" class="form-control" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
+                <input type="text" class="form-control selectInput' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="selectInput" value="' . (!$this->dados['cadastrado'] ? (($objeto->$printColumn) ?? $_POST[$slug]) : "") . '" ' . (($objeto) ? "disabled" : "") . '>
                 <span class="input-group-addon" style="' . (($objeto) ? "" : "display: none;") . '">
                     <button type="button" class="fa fa-trash removeOption" style="background:transparent;border: 1px solid #ced4da;width: 100%;height: 100%;"></button>
                 </span>

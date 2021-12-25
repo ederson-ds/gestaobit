@@ -15,7 +15,7 @@ class Contasapagar extends Controller {
     parent::permissaoCadastrarEditar($id);
     $this->model = new ContasapagarModel();
     $this->model->id = $id;
-    $this->requiredFields = ['descricao', 'vencimento', 'formapagamento'];
+    $this->requiredFields = ['descricao', 'vencimento', 'formapagamento_id'];
     $dados = parent::validacoes();
 
     $insertOuUpdate = $this->model->save($dados);

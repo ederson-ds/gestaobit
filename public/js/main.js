@@ -45,7 +45,7 @@ $(".selectInput").focus(function () {
     var currentController = controller;
     $.ajax({
       type: "GET",
-      url: URL + controller + "/get",
+      url: URL + controller.replace("_id", "") + "/get",
       dataType: "json",
       success: function (data) {
         if (currentController != controller) {
@@ -86,7 +86,7 @@ $(".selectInput").keyup(
 
     $.ajax({
       type: "POST",
-      url: URL + controller + "/get",
+      url: URL + controller.replace("_id", "") + "/get",
       data: {
         query: $("#" + controller)
           .parent()

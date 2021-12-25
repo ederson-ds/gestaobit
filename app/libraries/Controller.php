@@ -86,6 +86,7 @@ class Controller
     if ($insertOuUpdate && $model->id) {
       $dados['sucessoMsg'] = "Atualizado com sucesso!";
     } else if ($insertOuUpdate && !$model->id) {
+      $dados['cadastrado'] = true;
       $dados['sucessoMsg'] = "Inserido com sucesso!";
     }
     return $dados;

@@ -22,7 +22,12 @@ class Model
         foreach ($_POST as $key => $campo) {
           foreach ($this->fields as $field) {
             if ($key == $field) {
-              $data[$this->table]->$key = $campo;
+              if($this->endsWith($field, "_id") && $campo) {
+                $controller = substr($field, 0, -3);
+                $data[$this->table]->$controller = R::load($controller, $campo);
+              } else if($campo) {
+                $data[$this->table]->$key = $campo;
+              }
               $achou = true;
             }
           }
@@ -68,5 +73,14 @@ class Model
     $contaBancaria->saldoinicial = 2000.25;
     $contaBancaria->datasaldo = R::isoDate();
     R::store($contaBancaria);*/
+  }
+
+  function endsWith($haystack, $needle)
+  {
+    $length = strlen($needle);
+    if (!$length) {
+      return true;
+    }
+    return substr($haystack, -$length) === $needle;
   }
 }

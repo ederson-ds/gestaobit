@@ -6,7 +6,7 @@ use \R;
 class ContasapagarModel extends Model {
 
   public $fieldsName = ['Descrição', 'Vencimento', 'Forma de pagamento', 'Conta bancária'];
-  public $fields = ['descricao', 'vencimento'];
+  public $fields = ['descricao', 'vencimento', 'formapagamento_id', 'contabancaria_id'];
   public $table = "contasapagar";
 
   public function list($column, $order, $searchValue = "", $start, $length) {
