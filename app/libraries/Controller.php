@@ -36,7 +36,7 @@ class Controller
     $json_data = array(
       "draw" => intval($requestData['draw']),
       "recordsTotal" => intval($numRows),
-      "recordsFiltered" => intval(sizeof($dados)),
+      "recordsFiltered" => intval($requestData['search']['value'] ? sizeof($dados) : $numRows),
       "data" => $dados
     );
     echo json_encode($json_data);
