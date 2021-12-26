@@ -20,6 +20,28 @@ class Controller
     }
   }
 
+  public function list()
+  {
+    $requestData = $_REQUEST;
+
+    $arrayFields = [];
+    foreach ($this->model->fields as $key => $field) {
+      array_push($arrayFields, array($key => $field));
+    }
+    $columns = $arrayFields;
+
+    $orderColumn = $columns[$requestData['order'][0]['column']][array_key_first($columns[$requestData['order'][0]['column']])];
+    $numRows = $this->model->numRows();
+    $dados = $this->model->list($orderColumn, $requestData['order'][0]['dir'], $requestData['search']['value'], $requestData['start'], $requestData['length']);
+    $json_data = array(
+      "draw" => intval($requestData['draw']),
+      "recordsTotal" => intval($numRows),
+      "recordsFiltered" => intval(sizeof($dados)),
+      "data" => $dados
+    );
+    echo json_encode($json_data);
+  }
+
   public function permissaoCadastrarEditar($id)
   {
     if (!$this->tela->cadastrar && !$id) {
@@ -90,6 +112,16 @@ class Controller
       $dados['sucessoMsg'] = "Inserido com sucesso!";
     }
     return $dados;
+  }
+
+  public function delete($id = 0)
+  {
+    $this->permissaoDelete();
+    if ($id) {
+      $this->model->delete($id);
+    }
+    header("Location: " . URL . "/". $this->controller);
+    die();
   }
 
   protected function view($view, $dados = [])

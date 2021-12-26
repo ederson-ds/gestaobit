@@ -11,7 +11,7 @@ class ContabancariaModel extends Model
 
   public function get($query)
   {
-    $listContaBancaria = R::find("contabancaria", "nome ILIKE ?", ["%" . $query . "%"]);
+    $listContaBancaria = R::find("contabancaria", "nome ILIKE ? LIMIT 10", ["%" . $query . "%"]);
     $listContaBancaria['field'] = "nome";
     return $listContaBancaria;
   }

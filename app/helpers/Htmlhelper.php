@@ -58,8 +58,8 @@ class Htmlhelper
                                 "data": null,
                                 "orderable": false,
                                 "render": function ( data, type, row ) {
-                                    var edit = `<a href="' . URL . '/formapagamento/create/`+data.id+`" class="btn btn-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
-                                    var excluir = ` <button type="button" class="btn btn-danger btnExcluir" data-id="`+data.id+`" data-controller="formapagamento" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+                                    var edit = `<a href="' . URL . '/' . $controller->controller . '/create/`+data.id+`" class="btn btn-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
+                                    var excluir = ` <button type="button" class="btn btn-danger btnExcluir" data-id="`+data.id+`" data-controller="' . $controller->controller . '" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
                                     var acoes = "";
                                     if(' . ($controller->tela->editar ?? "false") . ') {
                                         acoes += edit;
@@ -74,7 +74,7 @@ class Htmlhelper
 
         $columns = "";
         foreach ($controller->model->fields as $key => $field) {
-            $columns .= '"data": "' . $field . '",';
+            $columns .= '{"data": "' . $field . '"},';
         }
 
         //Script JS
@@ -88,12 +88,11 @@ class Htmlhelper
                         "processing": true,
                         "serverSide": true,
                         "ajax": {
-                            "url": "' . URL . '/formapagamento/list",
+                            "url": "' . URL . '/' . $controller->controller . '/list",
                             "type": "POST"
                         },
-                        "columns": [{
-                            ' . $columns . '
-                        },
+                        "columns": [
+                        ' . $columns . '
                         ' . $acoesScript . '
                         ]
                     });

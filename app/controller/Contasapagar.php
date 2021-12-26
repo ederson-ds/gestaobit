@@ -6,14 +6,19 @@ use App\models\ContasapagarModel;
 
 class Contasapagar extends Controller {
   public $controller = "contasapagar";
-  public function index() {
+
+  public function __construct()
+  {
+    parent::__construct();
     $this->model = new ContasapagarModel();
+  }
+
+  public function index() {
     $this->view('contasapagar/contasapagar');
   }
 
   public function create($id = 0) {
     parent::permissaoCadastrarEditar($id);
-    $this->model = new ContasapagarModel();
     $this->model->id = $id;
     $this->requiredFields = ['descricao', 'vencimento', 'formapagamento_id'];
     $dados = parent::validacoes();
