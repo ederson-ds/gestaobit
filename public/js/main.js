@@ -1,3 +1,9 @@
+/* SIDEBAR */
+$(".menuPaiBtn").click(function() {
+  $(this).parent().find(".filhos").slideToggle();
+  $(this).find(".caret").toggleClass("rotate");
+});
+
 var selectInput = null;
 var controller = null;
 var URL = window.location.href;

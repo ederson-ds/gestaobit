@@ -64,6 +64,10 @@ class Model
       R::setup('pgsql:host=' . getenv('DB_HOST') . ';
           dbname=' . getenv('DB_NAME'), getenv('DB_USER'), getenv('DB_PASSWORD'));
     }
+
+    /*$permissoes = R::load("permissoes", 0);
+    $permissoes->permissoes = R::load("permissoes", 6);
+    R::store($permissoes);*/
     /*
     $formaPagamento = R::dispense('formapagamento');
     $formaPagamento->descricao = "A Combinar";
