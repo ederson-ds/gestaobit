@@ -5,15 +5,17 @@ body {
   height: 100%;
 }
 .main {
-  display: flex;
   height: 100%;
 }
 .content {
-  width: 100%;
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 240px);
+  left: 240px;
 }
 /* SIDEBAR */
 @import url("https://fonts.googleapis.com/css?family=Poppins");
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -23,18 +25,58 @@ a {
   color: white;
 }
 .sidebar {
-  width: 250px;
+  position: fixed;
+  left: 0;
+  width: 240px;
   height: 100%;
   background: #1b1b1b;
+  transition: all 0.5s ease;
 }
-.sidebar .text {
+.sidebar .logo_content .logo {
   color: white;
-  font-size: 25px;
-  font-weight: 600;
-  line-height: 65px;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+}
+.logo_content .logo .logo_name {
+  font-size: 20px;
+  font-weight: 400;
+  margin: auto;
+}
+.content header {
+  height: 50px;
+}
+#btn {
+  position: absolute;
+  font-size: 34px;
+  height: 50px;
+  width: 50px;
   text-align: center;
-  background: #1e1e1e;
-  letter-spacing: 1px;
+  line-height: 50px;
+  display: none;
+}
+#btnSidebar {
+  position: absolute;
+  font-size: 34px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  color: white;
+  right: 0;
+  top: 7px;
+  display: none;
+}
+@media only screen and (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+  }
+  .content {
+    display: none;
+  }
+  #btnSidebar {
+    display: block;
+  }
 }
 nav ul {
   background: #1b1b1b;

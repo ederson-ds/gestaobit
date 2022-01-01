@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title><?php echo APP_NOME ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet">
@@ -19,7 +20,11 @@
   <div class="main">
     <?php if (isset($_SESSION['login'])) { ?>
       <nav class="sidebar">
-        <div class="text">GestãoBit</div>
+        <div class="logo_content">
+          <div class="logo">
+            <div class="logo_name">GestãoBit <i class="fa fa-bars" id="btnSidebar"></i></div>
+          </div>
+        </div>
         <ul>
           <?php foreach (json_decode($_SESSION['telas']) as $tela) {
             if ($tela->top) { ?>
@@ -59,3 +64,4 @@
       </nav>
     <?php } ?>
     <div class="content">
+      <header style="display: none;"><i class="fa fa-bars" id="btn"></i></header>

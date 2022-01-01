@@ -1,5 +1,58 @@
 /* SIDEBAR */
-$(".menuPaiBtn").click(function() {
+$("#btn").click(function () {
+  $(".content").hide();
+  $(".sidebar").show();
+  $("#btn").hide();
+});
+$("#btnSidebar").click(function () {
+  $(".content").attr("style", "left:0px");
+  $(".content").show();
+  $(".sidebar").hide();
+  $("#btn").show();
+});
+
+function delete_cookie(name, path, domain) {
+  if (getCookie(name)) {
+    document.cookie =
+      name +
+      "=" +
+      (path ? ";path=" + path : "") +
+      (domain ? ";domain=" + domain : "") +
+      ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+  }
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+if (window.screen.availWidth <= "767") {
+  $(".content header").show();
+  if (getCookie("page") == "clicked") {
+    $(".content").attr("style", "left:0px");
+    $(".content").show();
+    $(".sidebar").hide();
+    $("#btn").show();
+    delete_cookie("page");
+  }
+
+  $(".main ul li ul li").click(function () {
+    document.cookie = "page=clicked";
+  });
+}
+
+$(".menuPaiBtn").click(function () {
   $(this).parent().find(".filhos").slideToggle();
   $(this).find(".caret").toggleClass("rotate");
 });
