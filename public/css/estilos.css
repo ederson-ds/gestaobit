@@ -67,17 +67,6 @@ a {
   top: 7px;
   display: none;
 }
-@media only screen and (max-width: 767px) {
-  .sidebar {
-    width: 100%;
-  }
-  .content {
-    display: none;
-  }
-  #btnSidebar {
-    display: block;
-  }
-}
 nav ul {
   background: #1b1b1b;
   height: 100%;

@@ -1,3 +1,13 @@
+var selectInput = null;
+var controller = null;
+var URL = window.location.href;
+var urlParts = URL.split("/");
+if (urlParts[3] == "gestaobit") {
+  URL = "http://localhost/gestaobit/";
+  urlParts.splice(3, 1);
+} else {
+  URL = "https://gestaobit.herokuapp.com/";
+}
 /* SIDEBAR */
 $("#btn").click(function () {
   $(".content").hide();
@@ -37,7 +47,12 @@ function getCookie(cname) {
   }
   return "";
 }
-if (window.screen.availWidth <= "767") {
+if (window.screen.availWidth <= "767" && urlParts[3] != "login") {
+  $(".content").hide();
+  $(".sidebar").show();
+  $(".sidebar").attr("style", "width:100%");
+  $("#btnSidebar").show();
+  $("#btn").hide();
   $(".content header").show();
   if (getCookie("page") == "clicked") {
     $(".content").attr("style", "left:0px");
@@ -56,16 +71,6 @@ $(".menuPaiBtn").click(function () {
   $(this).parent().find(".filhos").slideToggle();
   $(this).find(".caret").toggleClass("rotate");
 });
-
-var selectInput = null;
-var controller = null;
-var URL = window.location.href;
-var urlParts = URL.split("/");
-if (urlParts[3] == "gestaobit") {
-  URL = "http://localhost/gestaobit/";
-} else {
-  URL = "https://gestaobit.herokuapp.com/";
-}
 
 $(document).mouseup(function (e) {
   var container = $(".select");
