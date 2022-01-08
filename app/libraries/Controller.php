@@ -13,9 +13,11 @@ class Controller
 
   public function __construct()
   {
-    foreach (json_decode($_SESSION['telas']) as $key => $tela) {
-      if (strtolower($tela->controller) == $this->controller) {
-        $this->tela = $tela;
+    if(isset($_SESSION['telas'])) {
+      foreach (json_decode($_SESSION['telas']) as $key => $tela) {
+        if (strtolower($tela->controller) == $this->controller) {
+          $this->tela = $tela;
+        }
       }
     }
   }
@@ -138,6 +140,16 @@ class Controller
         include('../app/view/partials/closeform.php');
       }
       include('../app/view/partials/footer.php');
+    } else {
+      die('O arquivo de view não existe!');
+    }
+  }
+
+  protected function rawView($view, $dados = [])
+  {
+    $arquivo = ('../app/view/' . $view . '.php');
+    if (file_exists($arquivo)) {
+      include($arquivo);
     } else {
       die('O arquivo de view não existe!');
     }

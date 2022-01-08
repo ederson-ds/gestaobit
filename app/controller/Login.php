@@ -6,7 +6,15 @@ use App\models\LoginModel;
 
 class Login extends Controller {
   private $login;
+  public $controller = "login";
+  public function __construct()
+  {
+    parent::__construct();
+    $this->model = new LoginModel();
+  }
+
   public function index() {
+    $dados['invalidUser'] = false;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email = $_POST['email'];
       $senha = $_POST['senha'];
@@ -20,12 +28,15 @@ class Login extends Controller {
         $_SESSION['telas'] = json_encode($this->login->getTelas($loginResult->id));
         header("Location: ".URL."/");
         exit();
+      } else {
+        $dados['invalidUser'] = "Email ou senha incorretos";
       }
     }
-    $this->view('login/login');
+    $this->rawView('login/login', $dados);
   }
 
   public function cadastrar() {
+    $dados['error'] = false;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email = $_POST['email'];
       $senha = $_POST['senha'];
@@ -38,6 +49,6 @@ class Login extends Controller {
       header("Location: ".URL."/");
       exit();
     }
-    $this->view('login/cadastrar');
+    $this->rawView('login/cadastrar', $dados);
   }
 }
