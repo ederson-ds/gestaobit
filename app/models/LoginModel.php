@@ -17,6 +17,10 @@ class LoginModel extends Model {
     return R::store($login);
   }
 
+  public function findEmail($email) {
+    return R::findOne('login', 'email = ?', [$email]);
+  }
+
   public function getTelas($idLogin) {
     $telas = R::find("permissoes", "login_id = ? ", [$idLogin]);
     return $telas;

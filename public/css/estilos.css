@@ -30,7 +30,6 @@ a {
   width: 240px;
   height: 100%;
   background: #1b1b1b;
-  transition: all 0.5s ease;
 }
 .sidebar .logo_content .logo {
   color: white;

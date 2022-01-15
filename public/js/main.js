@@ -15,7 +15,7 @@ $("#btn").click(function () {
   $("#btn").hide();
 });
 $("#btnSidebar").click(function () {
-  $(".content").attr("style", "left:0px");
+  $(".content").attr("style", "left:0px; width: 100%;");
   $(".content").show();
   $(".sidebar").hide();
   $("#btn").show();

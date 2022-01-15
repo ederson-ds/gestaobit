@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title><?php echo APP_NOME ?> - Login</title>
+  <title><?php echo APP_NOME ?> - Cadastrar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,7 +27,7 @@
             ';
           } ?>
           <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" id="email" value="" autofocus>
+          <input type="email" class="form-control" name="email" id="email" value="<?php echo ($_POST['email']) ?? "" ?>" autofocus>
           <label for="senha">Senha</label>
           <input type="password" class="form-control" name="senha" id="senha" value="">
           <label for="resenha">Repita a Senha</label>

@@ -13,7 +13,7 @@
     $url = array_values($url);
   }
   $controller = false;
-  if(!$url[1]) {
+  if(!$url[1] || $url[1] == 'logout') {
     $controller = true;
   } else {
     if(isset($_SESSION['telas'])) {

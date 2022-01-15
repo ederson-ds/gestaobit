@@ -106,6 +106,7 @@ class Controller
   public function postSave($dados, $model, $insertOuUpdate)
   {
     $dados['objeto'] = ($model->id) ? $model->getOne($model->id) : "";
+    $dados['cadastrado'] = false;
 
     if ($insertOuUpdate && $model->id) {
       $dados['sucessoMsg'] = "Atualizado com sucesso!";

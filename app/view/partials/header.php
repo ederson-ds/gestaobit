@@ -26,7 +26,8 @@
           </div>
         </div>
         <ul>
-          <?php foreach (json_decode($_SESSION['telas']) as $tela) {
+          <?php if(isset($_SESSION['telas'])) {
+            foreach (json_decode($_SESSION['telas']) as $tela) {
             if ($tela->top) { ?>
               <li>
                 <a href="#" class="menuPaiBtn"><?php echo $tela->nometop; ?>
@@ -37,7 +38,7 @@
                     if ($subtela->permissoes_id == $tela->id) {
                   ?>
                       <li>
-                        <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>"><?php echo $subtela->controller; ?></a>
+                        <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>"><?php echo $subtela->nometop; ?></a>
                       </li>
                   <?php }
                   } ?>
@@ -47,7 +48,8 @@
                 <a href="<?php echo URL . "/" . strtolower($tela->controller) ?>"><?php echo $tela->controller; ?></a>
               </li>-->
           <?php }
-          } ?>
+          }
+         } ?>
           <!--<li>
               <a href="<?php echo URL ?>/contasapagar">Contas a pagar</a>
             </li>
@@ -58,7 +60,7 @@
               <a href="<?php echo URL ?>/permissoes">Permissões</a>
             </li>-->
           <li>
-            <a href="<?php echo URL ?>/logout">Logout</a>
+            <a href="<?php echo URL ?>/logout">Sair</a>
           </li>
         </ul>
       </nav>

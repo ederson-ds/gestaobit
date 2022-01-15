@@ -40,14 +40,26 @@ class Login extends Controller {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email = $_POST['email'];
       $senha = $_POST['senha'];
+      $resenha = $_POST['resenha'];
       $this->login = new LoginModel();
-      $login_id = $this->login->cadastrar($email, $senha);
-      $_SESSION['login'] = true;
-      $_SESSION['login_id'] = $login_id;
-      $_SESSION['email'] = $email;
-      $_SESSION['senha'] = $senha;
-      header("Location: ".URL."/");
-      exit();
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $dados['error'] = "Email inválido";
+      } else if($this->login->findEmail($email)) {
+        $dados['error'] = "Email já existe";
+      } else if(strlen($senha) < 6) {
+        $dados['error'] = "A senha precisa ter mais que 5 caracteres";
+      } else if($senha != $resenha) {
+        $dados['error'] = "A senha e a confirmação de senha não conferem";
+      } else {
+        $this->login = new LoginModel();
+        $login_id = $this->login->cadastrar($email, $senha);
+        $_SESSION['login'] = true;
+        $_SESSION['login_id'] = $login_id;
+        $_SESSION['email'] = $email;
+        $_SESSION['senha'] = $senha;
+        header("Location: ".URL."/");
+        exit();
+      }
     }
     $this->rawView('login/cadastrar', $dados);
   }
