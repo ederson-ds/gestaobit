@@ -65,6 +65,10 @@ class Model
           dbname=' . getenv('DB_NAME'), getenv('DB_USER'), getenv('DB_PASSWORD'));
     }
 
+    /*$login = R::load("login", 0);
+    $login->contapai = 1;
+    R::store($login);
+*/
     /*$permissoes = R::load("permissoes", 0);
     $permissoes->permissoes = R::load("permissoes", 6);
     R::store($permissoes);*/

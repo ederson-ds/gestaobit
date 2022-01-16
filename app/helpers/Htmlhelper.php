@@ -115,6 +115,16 @@ class Htmlhelper
         ';
     }
 
+    public function passwordField($fieldName, $slug)
+    {
+        $value = $this->getValue($slug);
+        echo '
+            <label for="' . $slug . '"' . ((array_search($slug, $this->requiredFields) !== false) ? 'class="required"' : "") . '>' . $fieldName . '</label>
+            <input type="password" class="form-control' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
+            ' . $this->errorsField($slug) . '
+        ';
+    }
+
     public function dateField($fieldName, $slug)
     {
         $value = $this->getValue($slug);

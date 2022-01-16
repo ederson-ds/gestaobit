@@ -21,9 +21,6 @@ body {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-a {
-  color: white;
-}
 .sidebar {
   position: fixed;
   left: 0;

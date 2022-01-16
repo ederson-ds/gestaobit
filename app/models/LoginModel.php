@@ -14,6 +14,7 @@ class LoginModel extends Model {
     $login = R::dispense('login');
     $login->email = $email;
     $login->senha = $senha;
+    $login->contapai = 1;
     return R::store($login);
   }
 
