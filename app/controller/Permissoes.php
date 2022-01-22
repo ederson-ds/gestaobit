@@ -20,7 +20,7 @@ class Permissoes extends Controller {
   public function create($id = 0) {
     parent::permissaoCadastrarEditar($id);
     $this->model->id = $id;
-    $this->requiredFields = ['telas_id', 'login_id'];
+    $this->requiredFields = ['usuario_id', 'telas_id'];
     $dados = parent::validacoes();
 
     $insertOuUpdate = $this->model->save($dados);

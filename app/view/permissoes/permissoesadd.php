@@ -11,10 +11,10 @@ use App\models\LoginModel; ?>
   ?>
   <div class="row">
     <div class="col-lg-3">
-      <?php $html->selectField("Usuário", "login_id", new LoginModel(), "email") ?>
+      <?php $html->selectField("Usuário", "usuario_id", new LoginModel(), "email", "login") ?>
     </div>
     <div class="col-lg-3">
-      <?php $html->selectField("Tela", "telas_id", new TelasModel(), "nome") ?>
+      <?php $html->selectField("Tela", "telas_id", new TelasModel(), "nome", "telas") ?>
     </div>
     <div class="col-lg-3">
       <?php $html->checkbox("Cadastrar", "cadastrar") ?>

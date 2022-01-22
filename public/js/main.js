@@ -105,7 +105,7 @@ $(".selectInput").focus(function () {
     $(".select table").append(
       '<p style="padding: 6px;margin: 0;">Buscando...</p>'
     );
-    controller = $(this).parent().find("input[type=hidden]").attr("name");
+    controller = $(this).parent().find("input[type=hidden]").attr("controller");
     var currentController = controller;
     $.ajax({
       type: "GET",
@@ -123,19 +123,19 @@ $(".selectInput").focus(function () {
         var field = data.field;
         var cadastrarNovo = data.cadastrarNovo;
         result.pop();
-        if(cadastrarNovo != null) {
+        if (cadastrarNovo != null) {
           result.pop();
         }
         result.forEach((element) => {
           $(".select table").append(
             "<tr id=" +
-              data[element].id +
-              "><th>" +
-              data[element][field] +
-              "</th></tr>"
+            data[element].id +
+            "><th>" +
+            data[element][field] +
+            "</th></tr>"
           );
         });
-        if(cadastrarNovo !== false) {
+        if (cadastrarNovo !== false) {
           $(".select table").append(
             '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
           );
@@ -153,14 +153,12 @@ $(".selectInput").keyup(
     $(".select table").append(
       '<p style="padding: 6px;margin: 0;">Buscando...</p>'
     );
-
+    console.log(selectInput);
     $.ajax({
       type: "POST",
       url: URL + controller.replace("_id", "") + "/get",
       data: {
-        query: $("#" + controller)
-          .parent()
-          .find(".selectInput")
+        query: selectInput
           .val(),
       },
       dataType: "json",
@@ -173,16 +171,16 @@ $(".selectInput").keyup(
         var field = data.field;
         var cadastrarNovo = data.cadastrarNovo;
         result.pop();
-        if(cadastrarNovo != null) {
+        if (cadastrarNovo != null) {
           result.pop();
         }
         result.forEach((element) => {
           $(".select table").append(
             "<tr id=" +
-              data[element].id +
-              "><th>" +
-              data[element][field] +
-              "</th></tr>"
+            data[element].id +
+            "><th>" +
+            data[element][field] +
+            "</th></tr>"
           );
         });
         if (result.length == 0) {
@@ -190,7 +188,7 @@ $(".selectInput").keyup(
             "<tr><td>Nenhum resultado encontrado</td></tr>"
           );
         }
-        if(cadastrarNovo !== false) {
+        if (cadastrarNovo !== false) {
           $(".select table").append(
             '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
           );
@@ -202,7 +200,7 @@ $(".selectInput").keyup(
 
 $(document).on("click", ".select table tr th", function () {
   var id = $(this).parent().attr("id");
-  $("#" + controller).val(id);
+  selectInput.parent().find("input[type=hidden]").val(id);
   selectInput.val($(this).parent().find("th").text());
   selectInput.prop("disabled", true);
   $(".select").hide();
@@ -218,8 +216,8 @@ $(document).on("click", ".removeOption", function () {
     .parent()
     .parent()
     .find("input[type=hidden]")
-    .attr("name");
-  $("#" + controller).val("");
+    .attr("controller");
+  selectInput.parent().find("input[type=hidden]").val("");
 });
 
 function delay(callback, ms) {

@@ -149,7 +149,7 @@ class Htmlhelper
         ';
     }
 
-    public function selectField($fieldName, $slug, $model, $printColumn)
+    public function selectField($fieldName, $slug, $model, $printColumn, $controller)
     {
         $value = $this->getValue($slug);
         $objeto = $model->getOne($value);
@@ -157,7 +157,7 @@ class Htmlhelper
         echo '
             <label for="selectInput"' . ((array_search($slug, $this->requiredFields) !== false) ? 'class="required"' : "") . '>' . $fieldName . '</label>
             <div class="input-group">
-                <input type="hidden" class="form-control" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
+                <input type="hidden" class="form-control" controller="' . $controller . '" id="' . $slug . '" name="' . $slug . '" value="' . $value . '">
                 <input type="text" class="form-control selectInput' . ((((array_search($slug, $this->dados['camposVazios']) !== false)) || ((array_search($slug, $this->dados['camposInvalidos']) !== false))) ? " error" : "") . '" id="selectInput" value="' . (!$this->dados['cadastrado'] ? (($objeto->$printColumn) ?? (($_POST[$slug]) ?? "")) : "") . '" ' . (($objeto) ? "disabled" : "") . '>
                 <span class="input-group-addon" style="' . (($objeto) ? "" : "display: none;") . '">
                     <button type="button" class="fa fa-trash removeOption" style="background:transparent;border: 1px solid #ced4da;width: 100%;height: 100%;"></button>

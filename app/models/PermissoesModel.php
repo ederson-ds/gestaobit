@@ -6,7 +6,7 @@ use \R;
 class PermissoesModel extends Model {
 
   public $fieldsName = ['Usuário', 'Tela', 'Cadastrar', 'Editar', 'Excluir'];
-  public $fields = ['login_id', 'telas_id', 'cadastrar', 'editar', 'excluir'];
+  public $fields = ['usuario_id', 'telas_id', 'cadastrar', 'editar', 'excluir'];
   public $table = "permissoes";
 
   public function save($dados)
@@ -21,8 +21,8 @@ class PermissoesModel extends Model {
             if ($key == $field) {
               if($this->endsWith($field, "_id") && $campo) {
                 $controller = substr($field, 0, -3);
-                if($controller == "login") {
-                  $data[$this->table]->usuario = R::load($controller, $campo);
+                if($controller == "usuario") {
+                  $data[$this->table]->usuario_id = $campo;
                 } else {
                   $data[$this->table]->$controller = R::load($controller, $campo);
                 }
@@ -83,7 +83,7 @@ class PermissoesModel extends Model {
 
 
     $sql = "
-    SELECT c.id, l.email as login_id, cadastrar, editar, excluir, t.controller, t.nome as telas_id, tpai.nome as telapainome FROM permissoes c
+    SELECT c.id, l.email as usuario_id, cadastrar, editar, excluir, t.controller, t.nome as telas_id, tpai.nome as telapainome FROM permissoes c
 	  INNER JOIN login l ON l.id = c.usuario_id 
     INNER JOIN telas t ON c.telas_id = t.id
     INNER JOIN telas tpai ON t.menupai_id = tpai.id
