@@ -32,7 +32,12 @@ class ContasapagarModel extends Model
 
     //filtro
     $filter = "";
-    $filter .= " AND c.descricao ILIKE '%$searchValue%'";
+    $filter .= " AND (c.descricao ILIKE '%$searchValue%'";
+
+    $filter .= " OR (";
+    $filter .= " f.descricao ILIKE '%$searchValue%'";
+    $filter .= " OR cb.nome ILIKE '%$searchValue%'";
+
     if (isset($dia)) {
       $filter .= " OR (";
       $filter .= " EXTRACT(DAY FROM vencimento) = " . $dia;
@@ -44,15 +49,15 @@ class ContasapagarModel extends Model
       }
       $filter .= ")";
     }
+    $filter .= ")";
+    $filter .= ")";
 
-    $filter .= " OR f.descricao ILIKE '%$searchValue%'";
-    $filter .= " OR cb.nome ILIKE '%$searchValue%'";
 
     $sql = "
     SELECT c.id, c.descricao, to_char(c.vencimento, 'DD/MM/YYYY') as vencimento, f.descricao as formapagamento_id, cb.nome as contabancaria_id FROM $this->table c
     LEFT JOIN formapagamento f ON c.formapagamento_id = f.id
     LEFT JOIN contabancaria cb ON c.contabancaria_id = cb.id
-    WHERE 1 = 1$filter ORDER BY $column $order LIMIT $length OFFSET $start
+    WHERE c.login_id = ".$_SESSION['login_id']."$filter ORDER BY $column $order LIMIT $length OFFSET $start
     ";
     return R::getAll($sql);
   }

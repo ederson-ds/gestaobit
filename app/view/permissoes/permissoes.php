@@ -1,3 +1,3 @@
-permissoes
-<hr>
-<a href="<?php echo URL ?>/permissoes/create">create</a>
+<div class="container">
+    <?php $html->datatable($this); ?>
+</div>

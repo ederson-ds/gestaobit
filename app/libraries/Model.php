@@ -18,6 +18,7 @@ class Model
     if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data[$this->table] = R::load($this->table, $this->id);
+        $data[$this->table]->login = R::load("login", $_SESSION['login_id']);
         $achou = false;
         foreach ($_POST as $key => $campo) {
           foreach ($this->fields as $field) {
@@ -55,7 +56,7 @@ class Model
 
   public function numRows()
   {
-    return R::count($this->table);
+    return R::count($this->table, "login_id = ?", [$_SESSION['login_id']]);
   }
 
   public function __construct()
@@ -65,6 +66,15 @@ class Model
           dbname=' . getenv('DB_NAME'), getenv('DB_USER'), getenv('DB_PASSWORD'));
     }
 
+    /*$tela = R::load("telas", 0);
+    $tela->controller = "";
+    $tela->nome = "Cadastro";
+    $tela->menupai = R::load("telas", 1);
+    R::store($tela);*/
+  /*  $tela = R::load("telas", 0);
+    $tela->controller = "Contasapagar";
+    $tela->nome = "Contas a pagar";
+    R::store($tela);*/
     /*$login = R::load("login", 0);
     $login->contapai = 1;
     R::store($login);

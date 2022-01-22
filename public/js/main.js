@@ -121,7 +121,11 @@ $(".selectInput").focus(function () {
           $(".select").css({ height: "130px", "overflow-y": "scroll" });
         }
         var field = data.field;
+        var cadastrarNovo = data.cadastrarNovo;
         result.pop();
+        if(cadastrarNovo != null) {
+          result.pop();
+        }
         result.forEach((element) => {
           $(".select table").append(
             "<tr id=" +
@@ -131,9 +135,11 @@ $(".selectInput").focus(function () {
               "</th></tr>"
           );
         });
-        $(".select table").append(
-          '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
-        );
+        if(cadastrarNovo !== false) {
+          $(".select table").append(
+            '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
+          );
+        }
       },
     });
   }
@@ -165,7 +171,11 @@ $(".selectInput").keyup(
           $(".select").css({ height: "130px", "overflow-y": "scroll" });
         }
         var field = data.field;
+        var cadastrarNovo = data.cadastrarNovo;
         result.pop();
+        if(cadastrarNovo != null) {
+          result.pop();
+        }
         result.forEach((element) => {
           $(".select table").append(
             "<tr id=" +
@@ -180,9 +190,11 @@ $(".selectInput").keyup(
             "<tr><td>Nenhum resultado encontrado</td></tr>"
           );
         }
-        $(".select table").append(
-          '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
-        );
+        if(cadastrarNovo !== false) {
+          $(".select table").append(
+            '<tr><td class="cadastrarNovo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Cadastrar novo</td></tr>'
+          );
+        }
       },
     });
   }, 500)

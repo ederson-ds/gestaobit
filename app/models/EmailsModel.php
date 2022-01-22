@@ -12,7 +12,7 @@ class EmailsModel extends Model
   public $fields = ['email', 'senha'];
   public $table = "login";
 
-  
+
   public function save($dados)
   {
     if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
@@ -60,12 +60,5 @@ class EmailsModel extends Model
     WHERE c.login_id = ".$_SESSION['login_id']."$filter ORDER BY $column $order LIMIT $length OFFSET $start
     ";
     return R::getAll($sql);
-  }
-
-  public function get($query)
-  {
-    $listFormaPagamento = R::find($this->table, "descricao ILIKE ? LIMIT 10", ["%" . $query . "%"]);
-    $listFormaPagamento['field'] = "descricao";
-    return $listFormaPagamento;
   }
 }

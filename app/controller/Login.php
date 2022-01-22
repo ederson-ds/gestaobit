@@ -22,7 +22,11 @@ class Login extends Controller {
       $loginResult = $this->login->login($email, $senha);
       if($loginResult) {
         $_SESSION['login'] = true;
-        $_SESSION['login_id'] = $loginResult->id;
+        if($loginResult->contapai) {
+          $_SESSION['login_id'] = $loginResult->id;
+        } else {
+          $_SESSION['login_id'] = $loginResult->login_id;
+        }
         $_SESSION['email'] = $loginResult->email;
         $_SESSION['senha'] = $loginResult->senha;
         $_SESSION['telas'] = json_encode($this->login->getTelas($loginResult->id));
@@ -62,5 +66,11 @@ class Login extends Controller {
       }
     }
     $this->rawView('login/cadastrar', $dados);
+  }
+
+  public function get()
+  {
+    $query = $_POST['query'] ?? "";
+    echo json_encode($this->model->get($query));
   }
 }

@@ -135,6 +135,20 @@ class Htmlhelper
         ';
     }
 
+    public function checkbox($fieldName, $slug)
+    {
+        $value = $this->getValue($slug);
+        echo '
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="1" name="' . $slug . '" id="' . $slug . '" '.(($value == 1) ? "checked" : "").'>
+              <label class="form-check-label" for="' . $slug . '">
+                ' . $fieldName . '
+              </label>
+            </div>
+            ' . $this->errorsField($slug) . '
+        ';
+    }
+
     public function selectField($fieldName, $slug, $model, $printColumn)
     {
         $value = $this->getValue($slug);

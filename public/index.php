@@ -13,7 +13,7 @@
     $url = array_values($url);
   }
   $controller = false;
-  if(!$url[1] || $url[1] == 'logout') {
+  if(!$url[1] || $url[1] == 'logout' || $url[1] == 'login' || $url[1] == 'telas') {
     $controller = true;
   } else {
     if(isset($_SESSION['telas'])) {

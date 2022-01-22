@@ -26,39 +26,30 @@
           </div>
         </div>
         <ul>
-          <?php if(isset($_SESSION['telas'])) {
+          <?php
+          if (isset($_SESSION['telas'])) {
+            $arrayMenuPai = [];
             foreach (json_decode($_SESSION['telas']) as $tela) {
-            if ($tela->top) { ?>
-              <li>
-                <a href="#" class="menuPaiBtn"><?php echo $tela->nometop; ?>
-                  <span class="fa fa-caret-down caret"></span>
-                </a>
-                <ul class="filhos">
-                  <?php foreach (json_decode($_SESSION['telas']) as $subtela) {
-                    if ($subtela->permissoes_id == $tela->id) {
-                  ?>
-                      <li>
-                        <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>"><?php echo $subtela->nometop; ?></a>
-                      </li>
-                  <?php }
-                  } ?>
-                </ul>
-              </li>
-              <!--<li>
-                <a href="<?php echo URL . "/" . strtolower($tela->controller) ?>"><?php echo $tela->controller; ?></a>
-              </li>-->
+              if (!in_array($tela->telapainome, $arrayMenuPai)) {
+                array_push($arrayMenuPai, $tela->telapainome); ?>
+                <li>
+                  <a href="#" class="menuPaiBtn"><?php echo $tela->telapainome; ?>
+                    <span class="fa fa-caret-down caret"></span>
+                  </a>
+                  <ul class="filhos">
+                    <?php foreach (json_decode($_SESSION['telas']) as $subtela) {
+                      if ($subtela->telapainome == $tela->telapainome) {
+                    ?>
+                        <li>
+                          <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>"><?php echo $subtela->nome; ?></a>
+                        </li>
+                    <?php }
+                    } ?>
+                  </ul>
+                </li>
           <?php }
-          }
-         } ?>
-          <!--<li>
-              <a href="<?php echo URL ?>/contasapagar">Contas a pagar</a>
-            </li>
-            <li>
-              <a href="<?php echo URL ?>/contasareceber">Contas a receber</a>
-            </li>
-            <li>
-              <a href="<?php echo URL ?>/permissoes">Permissões</a>
-            </li>-->
+            }
+          } ?>
           <li>
             <a href="<?php echo URL ?>/logout">Sair</a>
           </li>

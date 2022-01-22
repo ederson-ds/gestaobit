@@ -5,18 +5,28 @@ use App\libraries\Controller;
 use App\models\PermissoesModel;
 
 class Permissoes extends Controller {
-  private $permissoes;
+  public $controller = "permissoes";
+
+  public function __construct()
+  {
+    parent::__construct();
+    $this->model = new PermissoesModel();
+  }
+
   public function index() {
     $this->view('permissoes/permissoes');
   }
 
-  public function create() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['controller']) {
-        $this->permissoes = new PermissoesModel();
-        $this->permissoes->save($_POST);
-      }
-    }
-    $this->view('permissoes/permissoesadd');
+  public function create($id = 0) {
+    parent::permissaoCadastrarEditar($id);
+    $this->model->id = $id;
+    $this->requiredFields = ['telas_id', 'login_id'];
+    $dados = parent::validacoes();
+
+    $insertOuUpdate = $this->model->save($dados);
+
+    $dados = parent::postSave($dados, $this->model, $insertOuUpdate);
+
+    $this->view('permissoes/permissoesadd', $dados);
   }
 }
