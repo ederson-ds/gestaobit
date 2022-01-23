@@ -24,7 +24,7 @@ class Htmlhelper
         }
     }
 
-    public function datatable($controller)
+    public function datatable($controller, $checkboxes = [])
     {
         $columnsName = "";
         foreach ($controller->model->fieldsName as $key => $fieldName) {
@@ -74,7 +74,18 @@ class Htmlhelper
 
         $columns = "";
         foreach ($controller->model->fields as $key => $field) {
-            $columns .= '{"data": "' . $field . '"},';
+            if (in_array($field, $checkboxes)) {
+                $columns .= '
+                {
+                    "data": "' . $field . '",
+                    "render": function ( data, type, row ) {
+                        var html = `<input class="form-check-input" type="checkbox" `+((data) ? "checked" : "")+` disabled>`;
+                        return html;
+                    }
+                },';
+            } else {
+                $columns .= '{"data": "' . $field . '"},';
+            }
         }
 
         //Script JS
@@ -101,7 +112,8 @@ class Htmlhelper
         ';
     }
 
-    public function getValue($slug) {
+    public function getValue($slug)
+    {
         return !$this->dados['cadastrado'] ? (($this->dados['objeto']->$slug) ?? (($_POST[$slug]) ?? "")) : "";
     }
 
@@ -140,7 +152,7 @@ class Htmlhelper
         $value = $this->getValue($slug);
         echo '
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" name="' . $slug . '" id="' . $slug . '" '.(($value == 1) ? "checked" : "").'>
+              <input class="form-check-input" type="checkbox" value="1" name="' . $slug . '" id="' . $slug . '" ' . (($value == 1) ? "checked" : "") . '>
               <label class="form-check-label" for="' . $slug . '">
                 ' . $fieldName . '
               </label>

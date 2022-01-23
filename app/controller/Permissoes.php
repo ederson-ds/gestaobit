@@ -22,6 +22,11 @@ class Permissoes extends Controller {
     $this->model->id = $id;
     $this->requiredFields = ['usuario_id', 'telas_id'];
     $dados = parent::validacoes();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if($_POST['usuario_id'] && $_POST['telas_id']) {
+        $dados['camposInvalidos'] = $this->model->verificaMesmoUsuarioETela($dados['camposInvalidos'], $_POST['usuario_id'], $_POST['telas_id']);
+      }
+    }
 
     $insertOuUpdate = $this->model->save($dados);
 
