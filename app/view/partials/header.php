@@ -33,7 +33,7 @@
               if (!in_array($tela->telapainome, $arrayMenuPai)) {
                 array_push($arrayMenuPai, $tela->telapainome); ?>
                 <li>
-                  <a href="#" class="menuPaiBtn"><?php echo $tela->telapainome; ?>
+                  <a href="#" class="menuPaiBtn"><i class="<?php echo $tela->icon; ?>"></i> <?php echo $tela->telapainome; ?>
                     <span class="fa fa-caret-down caret"></span>
                   </a>
                   <ul class="filhos">
@@ -41,7 +41,7 @@
                       if ($subtela->telapainome == $tela->telapainome) {
                     ?>
                         <li>
-                          <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>"><?php echo $subtela->nome; ?></a>
+                          <a href="<?php echo URL . "/" . strtolower($subtela->controller) ?>" <?php echo ($this->controller == strtolower($subtela->controller)) ? 'id="filhoActive"' : "" ?>><?php echo $subtela->nome; ?></a>
                         </li>
                     <?php }
                     } ?>
@@ -51,10 +51,10 @@
             }
           } ?>
           <li>
-            <a href="<?php echo URL ?>/logout">Sair</a>
+            <a href="<?php echo URL ?>/logout"><i class="fa fa-sign-out"></i> Sair</a>
           </li>
         </ul>
       </nav>
     <?php } ?>
     <div class="content">
-      <header style="display: none;"><i class="fa fa-bars" id="btn"></i></header>
+      <header><i class="fa fa-bars" id="btn"></i></header>

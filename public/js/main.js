@@ -8,18 +8,9 @@ if (urlParts[3] == "gestaobit") {
 } else {
   URL = "https://gestaobit.herokuapp.com/";
 }
-/* SIDEBAR */
-$("#btn").click(function () {
-  $(".content").hide();
-  $(".sidebar").show();
-  $("#btn").hide();
-});
-$("#btnSidebar").click(function () {
-  $(".content").attr("style", "left:0px; width: 100%;");
-  $(".content").show();
-  $(".sidebar").hide();
-  $("#btn").show();
-});
+
+$("#filhoActive").parent().parent().show();
+$("#filhoActive").parent().parent().parent().find(".caret").addClass("rotate");
 
 function delete_cookie(name, path, domain) {
   if (getCookie(name)) {
@@ -48,14 +39,31 @@ function getCookie(cname) {
   return "";
 }
 if (window.screen.availWidth <= "767" && urlParts[3] != "login") {
+  /* SIDEBAR MOBILE */
+  $("#btn").click(function () {
+    delete_cookie("sidebar");
+    document.cookie = "sidebar=show";
+    $(".content").hide();
+    $(".sidebar").show();
+    $("#btn").hide();
+  });
+  $("#btnSidebar").click(function () {
+    delete_cookie("sidebar");
+    document.cookie = "sidebar=hide";
+    $(".content").attr("style", "left:0px; width: 100%;");
+    $(".content").show();
+    $(".sidebar").hide();
+    $("#btn").show();
+  });
+
   $(".content").hide();
   $(".sidebar").show();
   $(".sidebar").attr("style", "width:100%");
   $("#btnSidebar").show();
   $("#btn").hide();
   $(".content header").show();
-  if (getCookie("page") == "clicked") {
-    $(".content").attr("style", "left:0px");
+  if (getCookie("sidebar") == "hide") {
+    $(".content").attr("style", "left:0px; width: 100%;");
     $(".content").show();
     $(".sidebar").hide();
     $("#btn").show();
@@ -63,7 +71,30 @@ if (window.screen.availWidth <= "767" && urlParts[3] != "login") {
   }
 
   $(".main ul li ul li").click(function () {
-    document.cookie = "page=clicked";
+    delete_cookie("sidebar");
+    document.cookie = "sidebar=hide";
+  });
+} else {
+  /* SIDEBAR PC */
+  if (getCookie("sidebar") == "show") {
+    $(".sidebar").show();
+    $(".content").attr("style", "calc(100% - 240px);");
+  } else if(getCookie("sidebar") == "hide") {
+    $(".content").attr("style", "left:0px; width: 100%;");
+    $(".sidebar").hide();
+  }
+  $("#btn").click(function () {
+    if ($(".sidebar").is(":hidden")) {
+      delete_cookie("sidebar");
+      document.cookie = "sidebar=show";
+      $(".sidebar").show();
+      $(".content").attr("style", "calc(100% - 240px);");
+    } else {
+      delete_cookie("sidebar");
+      document.cookie = "sidebar=hide";
+      $(".content").attr("style", "left:0px; width: 100%;");
+      $(".sidebar").hide();
+    }
   });
 }
 

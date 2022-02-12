@@ -26,14 +26,15 @@ body {
   left: 0;
   width: 240px;
   height: 100%;
-  background: #1b1b1b;
+  background: #d9d9d9;
 }
 .sidebar .logo_content .logo {
-  color: white;
+  color: black;
   display: flex;
   height: 50px;
   width: 100%;
   align-items: center;
+  border-bottom: 1px solid #cbcbcb;
 }
 .logo_content .logo .logo_name {
   font-size: 20px;
@@ -42,6 +43,8 @@ body {
 }
 .content header {
   height: 50px;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 10px;
 }
 #btn {
   position: absolute;
@@ -50,7 +53,6 @@ body {
   width: 50px;
   text-align: center;
   line-height: 50px;
-  display: none;
 }
 #btnSidebar {
   position: absolute;
@@ -58,13 +60,13 @@ body {
   height: 50px;
   width: 50px;
   text-align: center;
-  color: white;
+  color: black;
   right: 0;
   top: 7px;
   display: none;
 }
 nav ul {
-  background: #1b1b1b;
+  background: #d9d9d9;
   height: 100%;
   width: 100%;
   list-style: none;
@@ -72,37 +74,46 @@ nav ul {
   margin: 0;
 }
 nav ul li {
-  line-height: 60px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 30px;
+  border-bottom: 1px solid #cbcbcb;
 }
 nav ul li a {
   position: relative;
-  color: white;
+  color: black;
   text-decoration: none;
   font-size: 18px;
-  padding-left: 40px;
+  padding-left: 10px;
   font-weight: 500;
   display: block;
   width: 100%;
   border-left: 3px solid transparent;
 }
-nav ul li a:hover {
-  color: cyan;
-  background: #1e1e1e;
-  border-left-color: cyan;
+nav ul li a:hover, #filhoActive:hover {
+  color: black;
+  background: #a1a1a1;
+  border-left-color: black;
+}
+#filhoActive {
+  color: black;
+  background: #c1c1c1;
+  border-left-color: black;
+}
+nav ul li a i {
+  width: 20px;
+  text-align: center;
 }
 nav ul ul {
   position: static;
   display: none;
 }
 nav ul ul li {
-  line-height: 42px;
+  line-height: 30px;
   border-bottom: none;
 }
 nav ul ul li a {
-  font-size: 17px;
-  color: #e6e6e6;
-  padding-left: 80px;
+  font-size: 12px;
+  color: black;
+  padding-left: 30px;
 }
 nav ul li a span {
   position: absolute;
@@ -110,7 +121,6 @@ nav ul li a span {
   right: 20px;
   transform: translateY(-50%);
   font-size: 22px;
-  transition: transform 0.4s;
 }
 nav ul li a span.rotate {
   transform: translateY(-50%) rotate(-180deg);

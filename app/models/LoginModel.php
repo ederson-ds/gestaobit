@@ -25,7 +25,7 @@ class LoginModel extends Model {
 
   public function getTelas($usuario_id) {
     $sql = "
-    SELECT cadastrar, editar, excluir, t.controller, t.nome, tpai.nome as telapainome FROM permissoes c
+    SELECT cadastrar, editar, excluir, t.controller, t.nome, tpai.nome as telapainome, tpai.icon FROM permissoes c
     INNER JOIN telas t ON c.telas_id = t.id
     INNER JOIN telas tpai ON t.menupai_id = tpai.id
     WHERE c.login_id = ".$_SESSION['login_id']."

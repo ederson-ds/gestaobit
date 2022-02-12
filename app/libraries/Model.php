@@ -67,6 +67,9 @@ class Model
     }
 
     /*$tela = R::load("telas", 0);
+    $tela->icon = "fa dollar";
+    R::store($tela);*/
+    /*$tela = R::load("telas", 0);
     $tela->controller = "";
     $tela->nome = "Cadastro";
     $tela->menupai = R::load("telas", 1);
