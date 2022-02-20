@@ -12,6 +12,8 @@ body {
   height: 100%;
   width: calc(100% - 240px);
   left: 240px;
+  background-color: #f4f6f9;
+  z-index: 0;
 }
 /* SIDEBAR */
 @import url("https://fonts.googleapis.com/css?family=Poppins");
@@ -27,6 +29,8 @@ body {
   width: 240px;
   height: 100%;
   background: #d9d9d9;
+  box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22)!important;
+  z-index: 1;
 }
 .sidebar .logo_content .logo {
   color: black;
@@ -45,6 +49,7 @@ body {
   height: 50px;
   border-bottom: 1px solid #dee2e6;
   margin-bottom: 10px;
+  background: white;
 }
 #btn {
   position: absolute;
@@ -125,13 +130,18 @@ nav ul li a span {
 nav ul li a span.rotate {
   transform: translateY(-50%) rotate(-180deg);
 }
-/*.sidebar {
-  background: gray;
-  width: 220px;
-  display: flex;
-}*/
-.form-control {
-  border-radius: 0px;
+.selectInput {
+  border-radius: 0.25rem !important;
+}
+.selectInput:disabled {
+  border-radius: 0.25rem 0px 0px 0.25rem !important;
+}
+.removeOption {
+  background:transparent;
+  border: 1px solid #ced4da;
+  width: 40px;
+  height: 100%;
+  border-radius: 0px 0.25rem 0.25rem 0px;
 }
 .select {
   position: absolute;
@@ -201,4 +211,28 @@ input[type="color"]:focus,
 /* CHECKBOX */
 .form-check {
   margin-top: 30px;
+}
+/* CARD */
+.content_card {
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  background-color: #fff;
+  border-radius: 0.25rem;
+}
+.content_card_header {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.content_card_body {
+  padding: 1.25rem;
+}
+/* LISTAGEM TABLE */
+#listagem {
+  border-collapse: collapse !important;
+}
+#listagem thead {
+  font-weight: bold;
+}
+#listagem thead td {
+  border: 1px solid #dee2e6;
+  border-bottom-width: 2px;
 }
