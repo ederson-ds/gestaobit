@@ -228,6 +228,7 @@ input[type="color"]:focus,
 /* LISTAGEM TABLE */
 #listagem {
   border-collapse: collapse !important;
+  font-size: 12px;
 }
 #listagem thead {
   font-weight: bold;
@@ -235,4 +236,28 @@ input[type="color"]:focus,
 #listagem thead td {
   border: 1px solid #dee2e6;
   border-bottom-width: 2px;
+}
+#listagem_filter label {
+  display: inline-grid;
+  width: 100%;
+}
+#listagem_filter label input {
+  margin: 0;
+}
+#listagem_length label {
+  width: 100%;
+}
+.dataTables_length {
+  margin-bottom: 5px;
+}
+tr:nth-child(even) {
+  background-color: rgb(247 247 247);
+}
+.btnExcluir {
+  cursor: pointer;
+}
+.icon {
+  font-size: 17px;
+  color: black;
+  margin-right: 10px;
 }

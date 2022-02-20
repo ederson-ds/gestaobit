@@ -40,7 +40,7 @@ class Htmlhelper
         }
         // Table
         echo '
-            <table id="listagem" class="table table-striped" style="width:100%">
+            <table id="listagem" class="table table-bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
                         ' . $columnsName . '
@@ -58,8 +58,8 @@ class Htmlhelper
                                 "data": null,
                                 "orderable": false,
                                 "render": function ( data, type, row ) {
-                                    var edit = `<a href="' . URL . '/' . $controller->controller . '/create/`+data.id+`" class="btn btn-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
-                                    var excluir = ` <button type="button" class="btn btn-danger btnExcluir" data-id="`+data.id+`" data-controller="' . $controller->controller . '" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+                                    var edit = `<a href="' . URL . '/' . $controller->controller . '/create/`+data.id+`" class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
+                                    var excluir = ` <span class="btnExcluir icon" data-id="`+data.id+`" data-controller="' . $controller->controller . '" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></span>`;
                                     var acoes = "";
                                     if(' . ($controller->tela->editar ?? "false") . ') {
                                         acoes += edit;
@@ -95,8 +95,23 @@ class Htmlhelper
                     $("#listagem").DataTable({
                         "responsive": true,
                         "language": {
-                            "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json",
-                            "lengthMenu": "Display _MENU_ records per page",
+                            "emptyTable": "Nenhum registro encontrado",
+                            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                            "infoEmpty": "Mostrando 0 até 0 de 0 registros",
+                            "infoFiltered": "(Filtrados de _MAX_ registros)",
+                            "infoThousands": ".",
+                            "loadingRecords": "Carregando...",
+                            "processing": "Processando...",
+                            "zeroRecords": "Nenhum registro encontrado",
+                            "search": "",
+                            "searchPlaceholder": "Pesquisar",
+                            "paginate": {
+                                "next": "Próximo",
+                                "previous": "Anterior",
+                                "first": "Primeiro",
+                                "last": "Último"
+                            },
+                            "lengthMenu": "Exibir _MENU_ registros",
                         },
                         "processing": true,
                         "serverSide": true,
