@@ -24,7 +24,7 @@ class Permissoes extends Controller {
     $dados = parent::validacoes();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if($_POST['usuario_id'] && $_POST['telas_id']) {
-        $dados['camposInvalidos'] = $this->model->verificaMesmoUsuarioETela($dados['camposInvalidos'], $_POST['usuario_id'], $_POST['telas_id']);
+        $dados['erro'] = $this->model->verificaMesmoUsuarioETela($dados['camposInvalidos'], $id, $_POST['usuario_id'], $_POST['telas_id']);
       }
     }
 

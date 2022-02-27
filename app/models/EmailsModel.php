@@ -15,7 +15,7 @@ class EmailsModel extends Model
 
   public function save($dados)
   {
-    if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
+    if (!$dados['camposInvalidos'] && !$dados['camposVazios'] && !$dados['erro']) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data[$this->table] = R::load($this->table, $this->id);
         $data[$this->table]->login = R::load($this->table, $_SESSION['login_id']);
@@ -60,5 +60,13 @@ class EmailsModel extends Model
     WHERE c.login_id = ".$_SESSION['login_id']."$filter ORDER BY $column $order LIMIT $length OFFSET $start
     ";
     return R::getAll($sql);
+  }
+
+  public function verificaMesmoEmail($dados, $id, $email) {
+    $object = R::findOne($this->table, 'email = ? AND id != ?', [$email, $id]);
+    if($object) {
+      return "Email informado já existe";
+    }
+    return null;
   }
 }

@@ -1,7 +1,15 @@
 </div>
+<?php if ($this->endsWith($arquivo, 'add.php')) { ?>
+<div class="card-footer">
+  <div class="container">
+    <button type="submit" class="btn btn-dark"><?php echo ($dados['objeto']) ? "Editar" : "Cadastrar" ?></button>
+    <a href="<?php echo URL . "/" . $this->controller; ?>" class="btn btn-secondary">Voltar</a>
+  </div>
+  </form>
+</div>
+<?php } ?>
 </div>
 </div>
-
 <!-- Select -->
 <div class="select" style="display: none;" tabindex="-1">
   <table>

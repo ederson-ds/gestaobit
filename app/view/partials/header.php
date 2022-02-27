@@ -62,6 +62,10 @@
       <div class="container">
         <div class="content_card">
           <div class="content_card_header">
+              <?php if(isset($this->tela->telapainome)) { ?>
               <?php echo $this->tela->telapainome . " / ". $this->tela->nome ?>
+              <?php } else {
+                echo "Home";                
+              } ?>
           </div>
         <div class="content_card_body">

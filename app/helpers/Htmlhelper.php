@@ -24,6 +24,17 @@ class Htmlhelper
         }
     }
 
+    public function mensagemErro()
+    {
+        if (isset($this->dados['erro'])) {
+            echo '
+            <div class="alert alert-danger" role="alert">
+                ' . $this->dados['erro'] . '
+            </div>
+        ';
+        }
+    }
+
     public function datatable($controller, $checkboxes = [])
     {
         $columnsName = "";
@@ -36,10 +47,10 @@ class Htmlhelper
         }
         $cadastrar = "";
         if ($controller->tela->cadastrar) {
-            $cadastrar .= '<a href="' . URL . '/' . $controller->controller . '/create">Inserir novo</a>';
+            $cadastrar .= '<a href="' . URL . '/' . $controller->controller . '/create" class="btn btn-dark btn-sm" id="inserirNovo">Inserir novo</a>';
         }
         // Table
-        echo '
+        echo $cadastrar . '
             <table id="listagem" class="table table-bordered table-hover" style="width:100%">
                 <thead>
                     <tr>
@@ -49,7 +60,7 @@ class Htmlhelper
                 </thead>
             </table>
             <hr>
-            ' . $cadastrar;
+            ';
 
         $acoesScript = "";
         if ($controller->tela->editar || $controller->tela->excluir) {
@@ -58,7 +69,7 @@ class Htmlhelper
                                 "data": null,
                                 "orderable": false,
                                 "render": function ( data, type, row ) {
-                                    var edit = `<a href="' . URL . '/' . $controller->controller . '/create/`+data.id+`" class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></a>`;
+                                    var edit = `<a href="' . URL . '/' . $controller->controller . '/create/`+data.id+`" class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></a><span style="margin-right: 10px;"></span>`;
                                     var excluir = ` <span class="btnExcluir icon" data-id="`+data.id+`" data-controller="' . $controller->controller . '" data-bs-toggle="modal" data-bs-target="#excluirModal"><i class="fa fa-trash" aria-hidden="true"></i></span>`;
                                     var acoes = "";
                                     if(' . ($controller->tela->editar ?? "false") . ') {
@@ -169,6 +180,7 @@ class Htmlhelper
         $value = $this->getValue($slug);
         echo '
             <div class="form-check">
+              <input type="hidden" value="0" name="' . $slug . '">
               <input class="form-check-input" type="checkbox" value="1" name="' . $slug . '" id="' . $slug . '" ' . (($value == 1) ? "checked" : "") . '>
               <label class="form-check-label" for="' . $slug . '">
                 ' . $fieldName . '

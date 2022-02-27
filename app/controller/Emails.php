@@ -24,10 +24,11 @@ class Emails extends Controller {
     $this->requiredFields = ['email', 'senha'];
     $dados = parent::validacoes();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      echo array_search("email", $dados['camposVazios']);
       if(array_search("email", $dados['camposVazios']) !== 0) {
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
           array_push($dados['camposInvalidos'], "email");
+        } else {
+          $dados['erro'] = $this->model->verificaMesmoEmail($dados['erro'], $id, $_POST['email']);
         }
       }
     }

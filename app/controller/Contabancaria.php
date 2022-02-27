@@ -5,13 +5,20 @@ use App\libraries\Controller;
 use App\models\ContabancariaModel;
 
 class Contabancaria extends Controller {
-  private $contaBancaria;
+  public $controller = "contabancaria";
+
+  public function __construct()
+  {
+    parent::__construct();
+    $this->model = new ContabancariaModel();
+  }
+
   public function index() {
-    $this->view('contasapagar/contasapagar');
+    $this->view('contabancaria/contabancaria');
   }
 
   public function create() {
-    $this->view('contasapagar/contasapagaradd');
+    $this->view('contabancaria/contabancariaadd');
   }
 
   public function get() {

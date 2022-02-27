@@ -14,12 +14,15 @@ class ContasapagarModel extends Model
 
   public function list($column, $order, $searchValue = "", $start, $length)
   {
-    if(is_numeric(substr($searchValue, 0, 2))) {
-      $dia = substr($searchValue, 0, 2);
-      if(is_numeric(substr($searchValue, 3, 2))) {
-        $mes = substr($searchValue, 3, 2);
-        if(is_numeric(substr($searchValue, 6, 4))) {
-          $ano = substr($searchValue, 6, 4);
+    if($searchValue) {
+      $date = explode("/", $searchValue);
+    }
+    if(isset($date[0]) && is_numeric($date[0])) {
+      $dia = $date[0];
+      if(isset($date[1]) && $date[1] != "") {
+        $mes = $date[1];
+        if(isset($date[2]) && $date[2] != "") {
+          $ano = $date[2];
         }
       }
     }

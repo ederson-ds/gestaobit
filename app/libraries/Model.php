@@ -15,7 +15,7 @@ class Model
 
   public function save($dados)
   {
-    if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
+    if (!$dados['camposInvalidos'] && !$dados['camposVazios'] && !$dados['erro']) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data[$this->table] = R::load($this->table, $this->id);
         $data[$this->table]->login = R::load("login", $_SESSION['login_id']);

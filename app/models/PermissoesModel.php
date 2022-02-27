@@ -14,7 +14,7 @@ class PermissoesModel extends Model
 
   public function save($dados)
   {
-    if (!$dados['camposInvalidos'] && !$dados['camposVazios']) {
+    if (!$dados['camposInvalidos'] && !$dados['camposVazios'] && !$dados['erro']) {
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data[$this->table] = R::load($this->table, $this->id);
         $data[$this->table]->login = R::load("login", $_SESSION['login_id']);
@@ -31,6 +31,8 @@ class PermissoesModel extends Model
                 }
               } else if ($campo) {
                 $data[$this->table]->$key = $campo;
+              } else {
+                $data[$this->table]->$key = null;
               }
               $achou = true;
             }
@@ -101,12 +103,12 @@ class PermissoesModel extends Model
     return R::getAll($sql);
   }
 
-  public function verificaMesmoUsuarioETela($dados, $usuario_id, $telas_id) {
-    $object = R::findOne($this->table, 'usuario_id = ? AND telas_id = ?', [$usuario_id, $telas_id]);
+  public function verificaMesmoUsuarioETela($dados, $id, $usuario_id, $telas_id) {
+    $object = R::findOne($this->table, 'usuario_id = ? AND telas_id = ? AND id != ?', [$usuario_id, $telas_id, $id]);
     if($object) {
-      array_push($dados, "usuario_id");
+      return "Este usuário já possuí essa permissão";
     }
-    return $dados;
+    return null;
   }
 
   public function numRows()

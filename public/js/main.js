@@ -184,7 +184,6 @@ $(".selectInput").keyup(
     $(".select table").append(
       '<p style="padding: 6px;margin: 0;">Buscando...</p>'
     );
-    console.log(selectInput);
     $.ajax({
       type: "POST",
       url: URL + controller.replace("_id", "") + "/get",

@@ -8,6 +8,7 @@ use App\models\LoginModel; ?>
 <div class="container">
   <?php
   $html->mensagemSucesso();
+  $html->mensagemErro();
   ?>
   <div class="row">
     <div class="col-lg-3">

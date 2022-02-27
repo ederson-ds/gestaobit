@@ -100,6 +100,7 @@ class Controller
   {
     $dados['camposInvalidos'] = $this->verificaCamposInvalidos();
     $dados['camposVazios'] = $this->verificaCamposVazios($this->requiredFields);
+    $dados['erro'] = null;
     return $dados;
   }
 
@@ -137,9 +138,6 @@ class Controller
         include('../app/view/partials/openform.php');
       }
       include($arquivo);
-      if ($this->endsWith($arquivo, 'add.php')) {
-        include('../app/view/partials/closeform.php');
-      }
       include('../app/view/partials/footer.php');
     } else {
       die('O arquivo de view não existe!');

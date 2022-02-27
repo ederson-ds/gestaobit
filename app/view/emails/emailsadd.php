@@ -6,6 +6,7 @@ use App\models\FormaPagamentoModel; ?>
 <div class="container">
   <?php
   $html->mensagemSucesso();
+  $html->mensagemErro();
   ?>
   <div class="row">
     <div class="col-lg-3">
