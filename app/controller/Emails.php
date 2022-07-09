@@ -2,11 +2,13 @@
 
 namespace App\controller;
 use App\libraries\Controller;
-use App\models\ContasapagarModel;
 use App\models\EmailsModel;
+use App\models\TelasModel;
+use App\models\PermissoesModel;
 
 class Emails extends Controller {
   public $controller = "emails";
+  public $telasModel;
 
   public function __construct()
   {
@@ -33,10 +35,29 @@ class Emails extends Controller {
       }
     }
 
+    if($id) {
+      $telasModel = new TelasModel();
+      $dados['listTelas'] = $telasModel->getPermissoes($id);
+    }
+
     $insertOuUpdate = $this->model->save($dados);
 
     $dados = parent::postSave($dados, $this->model, $insertOuUpdate);
 
     $this->view('emails/emailsadd', $dados);
+  }
+
+  public function liberarOuBloquear() {
+    $acao = $_POST['acao'];
+    $permissoes_id = $_POST['permissoes_id'];
+    $liberarOuBloquear = $_POST['liberarOuBloquear'];
+    $telas_id = $_POST['telas_id'];
+    $usuario_id = $_POST['usuario_id'];
+    if($acao == "visualizar" || $acao == "cadastrar" || $acao == "editar" || $acao == "excluir") {
+      $permissoes = new PermissoesModel();
+      $permissoes_id = $permissoes->liberarOuBloquear($acao, $permissoes_id, $liberarOuBloquear, $telas_id, $usuario_id);
+    }
+
+    echo json_encode(array("permissoes_id" => $permissoes_id));
   }
 }

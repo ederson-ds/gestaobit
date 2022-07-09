@@ -1,6 +1,7 @@
 <?php
 
 namespace App\libraries;
+use App\models\LoginModel;
 
 class Rota {
   private $controller = 'Paginas';
@@ -28,6 +29,10 @@ class Rota {
 
     $this->parametros = $url ? array_values($url) : [];
     if($this->metodo != 'view' && $this->metodo != 'endsWith') {
+      if(isset($_SESSION['usuario_id'])) {
+        $login = new LoginModel();
+        $_SESSION['telas'] = json_encode($login->getTelas($_SESSION['usuario_id']));
+      }
       call_user_func_array([$this->controller, $this->metodo], $this->parametros);
     } else {
       $classe = "App\\controller\\Paginas";

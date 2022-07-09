@@ -69,4 +69,16 @@ class TelasModel extends Model
     $listTelas['cadastrarNovo'] = false;
     return $listTelas;
   }
+
+  public function getPermissoes($usuario_id)
+  {
+    $sql = "
+      select p.id, t.id as telas_id, t.nome, p.visualizar, p.cadastrar, p.editar, p.excluir
+      from telas t 
+      left join login l on l.id = $usuario_id
+      left join permissoes p on p.usuario_id = l.id and t.id = p.telas_id 
+      where t.id NOT IN (7,11) AND menupai_id IS NOT null
+      ORDER BY t.nome";
+    return R::getAll($sql);
+  }
 }

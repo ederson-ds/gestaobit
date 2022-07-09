@@ -27,7 +27,7 @@
             ';
           } ?>
           <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" id="email" value="" autofocus>
+          <input type="email" class="form-control" name="email" id="email" value="<?php echo $dados['email'] ?? "" ?>" autofocus>
           <label for="senha">Senha</label>
           <input type="password" class="form-control" name="senha" id="senha" value="">
           <div class="mt-3">

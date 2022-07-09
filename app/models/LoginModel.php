@@ -25,11 +25,12 @@ class LoginModel extends Model {
 
   public function getTelas($usuario_id) {
     $sql = "
-    SELECT cadastrar, editar, excluir, t.controller, t.nome, tpai.nome as telapainome, tpai.icon FROM permissoes c
+    SELECT visualizar, cadastrar, editar, excluir, t.controller, t.nome, tpai.nome as telapainome, tpai.icon FROM permissoes c
     INNER JOIN telas t ON c.telas_id = t.id
     INNER JOIN telas tpai ON t.menupai_id = tpai.id
     WHERE c.login_id = ".$_SESSION['login_id']."
-    AND usuario_id = ".$usuario_id;
+    AND usuario_id = ".$usuario_id."
+    AND c.visualizar = 1";
     return R::getAll($sql);
   }
 

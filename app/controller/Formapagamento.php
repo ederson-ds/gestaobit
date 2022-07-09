@@ -9,9 +9,14 @@ class Formapagamento extends Controller
 {
   public $controller = "formapagamento";
 
+  public function __construct()
+  {
+    parent::__construct();
+    $this->model = new FormaPagamentoModel();
+  }
+
   public function index()
   {
-    $this->model = new FormaPagamentoModel();
     $this->view('formapagamento/formapagamento');
   }
 
@@ -41,7 +46,7 @@ class Formapagamento extends Controller
     die();
   }
 
-  public function list()
+  /*public function list()
   {
     $requestData = $_REQUEST;
 
@@ -59,7 +64,7 @@ class Formapagamento extends Controller
       "data" => $dados
     );
     echo json_encode($json_data);
-  }
+  }*/
 
   public function get()
   {

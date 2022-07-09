@@ -10,9 +10,12 @@ class ContasapagarModel extends Model
 
   public $fieldsName = ['Descrição', 'Vencimento', 'Forma de pagamento', 'Conta bancária'];
   public $fields = ['descricao', 'vencimento', 'formapagamento_id', 'contabancaria_id'];
+  public $fieldsTypeData = ['text', 'date', 'fk', 'fk'];
+  public $foreignTables = ['formapagamento', 'contabancaria'];
+  public $foreignTablesFilterColumn = ['descricao', 'nome'];
   public $table = "contasapagar";
 
-  public function list($column, $order, $searchValue = "", $start, $length)
+  /*public function list($column, $order, $searchValue = "", $start, $length)
   {
     if($searchValue) {
       $date = explode("/", $searchValue);
@@ -63,7 +66,7 @@ class ContasapagarModel extends Model
     WHERE c.login_id = ".$_SESSION['login_id']."$filter ORDER BY $column $order LIMIT $length OFFSET $start
     ";
     return R::getAll($sql);
-  }
+  }*/
 
   public function get($query)
   {

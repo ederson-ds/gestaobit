@@ -10,7 +10,10 @@ class Model
 {
   protected $fieldsName = [];
   protected $fields = [];
+  protected $fieldsTypeData = [];
   protected $table = null;
+  protected $foreignTables = [];
+  protected $foreignTablesFilterColumn = [];
   public $id = 0;
 
   public function save($dados)
@@ -65,7 +68,13 @@ class Model
       R::setup('pgsql:host=' . getenv('DB_HOST') . ';
           dbname=' . getenv('DB_NAME'), getenv('DB_USER'), getenv('DB_PASSWORD'));
     }
-
+    /*$permissoes = R::load("permissoes", 0);
+    $permissoes->excluir = 1;
+    R::store($permissoes);*/
+    /*$permissoes = R::load("permissoes", 0);
+    $permissoes->cadastrar = 1;
+    $permissoes->visualizar = 1;
+    R::store($permissoes);*/
     /*$tela = R::load("telas", 0);
     $tela->icon = "fa dollar";
     R::store($tela);*/
@@ -103,5 +112,95 @@ class Model
       return true;
     }
     return substr($haystack, -$length) === $needle;
+  }
+
+  public function list($column, $order, $searchValue = "", $start, $length)
+  {
+    //date
+    if($searchValue) {
+      $date = explode("/", $searchValue);
+    }
+    if(isset($date[0]) && is_numeric($date[0])) {
+      $dia = $date[0];
+      if(isset($date[1]) && $date[1] != "") {
+        $mes = $date[1];
+        if(isset($date[2]) && $date[2] != "") {
+          $ano = $date[2];
+        }
+      }
+    }
+
+    //joins
+    $join = "";
+    foreach($this->foreignTables as $foreignTable) {
+      $join .= " LEFT JOIN $foreignTable ON maintable.".$foreignTable."_id = $foreignTable.id";
+    }
+
+    //filter
+    $filter = "";
+    $i = 0;
+    $firstOR = false;
+    $selectFields = "maintable.id, ";
+    foreach($this->fields as $key => $field) {
+      if($i == 0) {
+        $selectFields .= "maintable.$field, ";
+        $filter .= " AND (maintable.$field ILIKE '%$searchValue%'";
+      } else {
+        if($this->fieldsTypeData[$key] == "fk") {
+          foreach($this->foreignTables as $key2 => $foreignTable) {
+            if($foreignTable == substr($field, 0, -3)) {
+              $selectFields .= $foreignTable.".".$this->foreignTablesFilterColumn[$key2]." as $field, ";
+              if(!$firstOR) {
+                $filter .= " OR (";
+                $firstOR = true;
+              } else {
+                $filter .= " OR ";
+              }
+              $filter .= $foreignTable.".".$this->foreignTablesFilterColumn[$key2]." ILIKE '%$searchValue%'";
+            }
+          }
+        } else if($this->fieldsTypeData[$key] == "text") {
+          $selectFields .= "maintable.$field, ";
+          if(!$firstOR) {
+            $filter .= " OR (";
+            $firstOR = true;
+          } else {
+            $filter .= " OR ";
+          }
+          $filter .= "maintable.$field ILIKE '%$searchValue%'";
+        } else if($this->fieldsTypeData[$key] == "date") {
+          $selectFields .= "to_char(maintable.$field, 'DD/MM/YYYY') as $field, ";
+        }
+      }
+      $i++;
+    }
+
+    foreach($this->fields as $key => $field) {
+      if($this->fieldsTypeData[$key] == "date") {
+        if (isset($dia)) {
+          $filter .= " OR (";
+          $filter .= " EXTRACT(DAY FROM $field) = " . $dia;
+          if (isset($mes)) {
+            $filter .= " AND EXTRACT(MONTH FROM $field) = " . $mes;
+            if (isset($ano)) {
+              $filter .= " AND EXTRACT(YEAR FROM $field) = " . $ano;
+            }
+          }
+          $filter .= ")";
+        }
+      }
+    }
+    if($i != 1) {
+      $filter .= ")";
+    }
+    $filter .= ")";
+    $selectFields = rtrim($selectFields, " ,");
+
+    $sql = "
+      SELECT $selectFields FROM $this->table maintable
+      $join
+      WHERE maintable.login_id = ".$_SESSION['login_id']."$filter ORDER BY maintable.$column $order LIMIT $length OFFSET $start
+    ";
+    return R::getAll($sql);
   }
 }

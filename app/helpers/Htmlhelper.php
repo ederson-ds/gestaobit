@@ -37,6 +37,19 @@ class Htmlhelper
 
     public function datatable($controller, $checkboxes = [])
     {
+        $achou = false;
+        if(isset($_SESSION['telas'])) {
+            foreach (json_decode($_SESSION['telas']) as $key => $tela) {
+                if (strtolower($tela->controller) == $controller->controller) {
+                    $achou = true;
+                    $controller->tela = $tela;
+                }
+            }
+        }
+        if(!$achou) {
+            header("Location: ".URL."/");
+            exit();
+        }
         $columnsName = "";
         foreach ($controller->model->fieldsName as $key => $fieldName) {
             $columnsName .= "<td>" . $fieldName . "</td>";

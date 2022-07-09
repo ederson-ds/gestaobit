@@ -18,6 +18,12 @@ class Login extends Controller {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email = $_POST['email'];
       $senha = $_POST['senha'];
+      $dados['email'] = $email;
+      if($email == "" || $senha == "") {
+        $dados['invalidUser'] = "Email ou senha são obrigatórios";
+        $this->rawView('login/login', $dados);
+        die;
+      }
       $this->login = new LoginModel();
       $loginResult = $this->login->login($email, $senha);
       if($loginResult) {
@@ -27,9 +33,10 @@ class Login extends Controller {
         } else {
           $_SESSION['login_id'] = $loginResult->login_id;
         }
+        $_SESSION['usuario_id'] = $loginResult->id;
         $_SESSION['email'] = $loginResult->email;
         $_SESSION['senha'] = $loginResult->senha;
-        $_SESSION['telas'] = json_encode($this->login->getTelas($loginResult->id));
+        //$_SESSION['telas'] = json_encode($this->login->getTelas($loginResult->id));
         header("Location: ".URL."/");
         exit();
       } else {

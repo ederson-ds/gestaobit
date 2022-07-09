@@ -115,4 +115,20 @@ class PermissoesModel extends Model
   {
     return R::count($this->table, "login_id = ? AND usuario_id <> ?", [$_SESSION['login_id'], $_SESSION['login_id']]);
   }
+
+  public function liberarOuBloquear($acao, $permissoes_id, $liberarOuBloquear, $telas_id, $usuario_id) {
+    if($permissoes_id == 0) {
+      $permissoes = R::load($this->table, $permissoes_id);
+      $permissoes->$acao = $liberarOuBloquear ? (int)$liberarOuBloquear : null;
+      $permissoes->login_id = $_SESSION['login_id'];
+      $permissoes->telas_id = $telas_id;
+      $permissoes->usuario_id = $usuario_id;
+      $permissoes_id = R::store($permissoes);
+    } else {
+      $permissoes = R::load($this->table, $permissoes_id);
+      $permissoes->$acao = $liberarOuBloquear ? (int)$liberarOuBloquear : null;
+      $permissoes_id = R::store($permissoes);
+    }
+    return $permissoes_id;
+  }
 }
